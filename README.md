@@ -1,5 +1,5 @@
 # mars-explorer
-School assignment - Multi Agent System collecting stuff on Mars
+All credit to https://github.com/mihneadb/mars-explorer. This repo is a modification of mihneadb's. Made for a school assignment
 
 ## Run me
 
