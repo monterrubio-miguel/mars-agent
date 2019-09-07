@@ -1,15 +1,16 @@
 import random
 
 from entities.drawable_entity import DrawableEntity
+from entities.morona import Morona
 from entities.message import MESSAGE_WAIT, ComeMessage
 from utils import rect_in_world, rects_are_overlapping, normalize
 
 
 class Explorer(DrawableEntity):
-    SIZE = 7
+    SIZE = 10
     MAX_VELOCITY = 1.3
-    PICKUP_REACH = 1
-    SENSOR_RANGE = 15
+    PICKUP_REACH = .1
+    SENSOR_RANGE = 25
     SENSE_DELAY = 100
     COLOR = 'blue'
     HAS_ROCK_COLOR = 'yellow'
@@ -21,6 +22,7 @@ class Explorer(DrawableEntity):
         self.world = world
         self.dx, self.dy = self._get_new_direction()
         self.ticks = 0
+        self.moronaDelay = 0
         self.has_rock = False
         self.inbox = []
 
@@ -60,6 +62,7 @@ class Explorer(DrawableEntity):
             if self._drop_available():
                 self.has_rock = False
                 self.world.rock_collected()
+                
                 return
 
             # Call for a carrier to pick up.
@@ -71,12 +74,21 @@ class Explorer(DrawableEntity):
                                              self.world.mars_base.y - self.y)
             else:
                 return
+
+            if self.ticks % 15 == 0 and self.ticks > 10:
+                morona = Morona(self.x, 
+                                self.y, 
+                                self.dx, 
+                                self.dy)
+                self.world.add_entity(morona)
+                
         else:
             # Pick up.
             rock = self._rock_available()
             if rock:
                 self.has_rock = True
                 self.world.remove_entity(rock)
+                
                 return
 
             # Head towards rock.
@@ -84,9 +96,19 @@ class Explorer(DrawableEntity):
             if rock:
                 self.dx, self.dy = normalize(rock.x - self.x, rock.y - self.y)
 
+            morona = self._morona_available()
+            if morona:
+                self.dx = morona.dx * -1
+                self.dy = morona.dy * -1
+                self.world.remove_entity(morona)
+
         # Keep walkin'.
-        while not self._can_move():
+        if self.ticks % 200 == 0 and self._morona_range() == 0:
             self.dx, self.dy = self._get_new_direction()
+
+        if not self._can_move():
+            self.dx, self.dy = self._get_new_direction()
+            
         self._move()
 
     def _move(self):
@@ -94,6 +116,11 @@ class Explorer(DrawableEntity):
         self.y += self.dy
 
     def _get_new_direction(self):
+        dx = random.uniform(-self.MAX_VELOCITY, self.MAX_VELOCITY)
+        dy = random.uniform(-self.MAX_VELOCITY, self.MAX_VELOCITY)
+        return normalize(dx, dy)
+
+    def _roam(self):
         dx = random.uniform(-self.MAX_VELOCITY, self.MAX_VELOCITY)
         dy = random.uniform(-self.MAX_VELOCITY, self.MAX_VELOCITY)
         return normalize(dx, dy)
@@ -112,6 +139,9 @@ class Explorer(DrawableEntity):
             if isinstance(other, Explorer):
                 continue
 
+            if isinstance(other, Morona):
+                continue
+
             if rects_are_overlapping(bounds, other.get_bounds()):
                 return False
 
@@ -125,6 +155,24 @@ class Explorer(DrawableEntity):
                 return rock
 
         return None
+
+    def _morona_available(self):
+        for morona in self.world.moronas:
+            if rects_are_overlapping(self.get_bounds(),
+                                     morona.get_bounds(),
+                                     self.PICKUP_REACH):
+                return morona
+
+        return None
+
+    def _morona_range(self):
+        for morona in self.world.moronas:
+            if rects_are_overlapping(self.get_bounds(),
+                                     morona.get_bounds(),
+                                     self.SENSOR_RANGE):
+                return 1
+
+        return 0
 
     def _sense_rock(self):
         # Wait a bit so that the explorers spread out.

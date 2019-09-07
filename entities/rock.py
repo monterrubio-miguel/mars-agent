@@ -5,7 +5,7 @@ from utils import rect_in_world, rects_are_overlapping
 
 
 class Rock(DrawableEntity):
-    SIZE = 10
+    SIZE = 14
     COLOR = 'orange'
 
     def __init__(self, x, y):
@@ -41,12 +41,32 @@ class Rock(DrawableEntity):
     def generate_many(num, world):
 
         rocks = []
-        while len(rocks) < num:
-            x = random.randint(0, world.width)
-            y = random.randint(0, world.height)
+        condition = True
+        while condition:
+            x = random.randint(0, world.width-100)
+            y = random.randint(0, world.height-100)
 
             rock = Rock(x, y)
             if rock.has_room(world):
                 rocks.append(rock)
 
+            rock = Rock(x + random.randint(-8,8), y + random.randint(-8,8))
+            if rock.has_room(world):
+                rocks.append(rock)
+
+            rock = Rock(x + random.randint(-8,8), y + random.randint(-8,8))
+            if rock.has_room(world):
+                rocks.append(rock)
+
+            rock = Rock(x + random.randint(-8,8), y + random.randint(-8,8))
+            if rock.has_room(world):
+                rocks.append(rock)
+
+            if len(rocks) < num:
+                condition = True
+            else:
+                condition = False
+
+            print(len(rocks))
+                
         return rocks

@@ -1,6 +1,7 @@
-from entities.carrier import Carrier
 from entities.drawable_entity import DrawableEntity
+from entities.carrier import Carrier
 from entities.explorer import Explorer
+from entities.morona import Morona
 from entities.mars_base import MarsBase
 from entities.obstacle import Obstacle
 from entities.rock import Rock
@@ -13,6 +14,7 @@ class World(DrawableEntity):
         self.width = width
         self.height = height
 
+        self.moronas = []
         self.entities = []
         self.rocks = []
         self.obstacles = []
@@ -40,6 +42,8 @@ class World(DrawableEntity):
             self.rocks.append(entity)
         elif isinstance(entity, Obstacle):
             self.obstacles.append(entity)
+        elif isinstance(entity, Morona):
+            self.moronas.append(entity)
         # Order matters here because Carrier < Explorer.
         elif isinstance(entity, Carrier):
             self.carriers.append(entity)
@@ -57,6 +61,8 @@ class World(DrawableEntity):
             self.rocks.remove(entity)
         elif isinstance(entity, Obstacle):
             self.obstacles.remove(entity)
+        elif isinstance(entity, Morona):
+            self.moronas.remove(entity)
         # Order matters here because Carrier < Explorer.
         elif isinstance(entity, Carrier):
             self.carriers.remove(entity)

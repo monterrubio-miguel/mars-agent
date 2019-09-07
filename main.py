@@ -2,6 +2,7 @@ import argparse
 
 from entities.carrier import Carrier
 from entities.explorer import Explorer
+from entities.morona import Morona
 from gui import GUI
 from entities.mars_base import MarsBase
 from entities.obstacle import Obstacle
@@ -40,10 +41,10 @@ def init_entities(num_obstacles, num_rocks, num_explorers, num_carriers):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--obstacles', default=10, dest='obstacles', type=int)
+    parser.add_argument('--obstacles', default=0, dest='obstacles', type=int)
     parser.add_argument('--rocks', default=100, dest='rocks', type=int)
     parser.add_argument('--explorers', default=10, dest='explorers', type=int)
-    parser.add_argument('--carriers', default=10, dest='carriers', type=int)
+    parser.add_argument('--carriers', default=0, dest='carriers', type=int)
 
     args = parser.parse_args()
 
