@@ -66,7 +66,5 @@ class Rock(DrawableEntity):
                 condition = True
             else:
                 condition = False
-
-            print(len(rocks))
                 
         return rocks
