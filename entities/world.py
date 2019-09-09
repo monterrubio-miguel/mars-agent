@@ -1,5 +1,4 @@
 from entities.drawable_entity import DrawableEntity
-from entities.carrier import Carrier
 from entities.explorer import Explorer
 from entities.morona import Morona
 from entities.mars_base import MarsBase

@@ -1,7 +1,6 @@
 import random
 
 from entities.drawable_entity import DrawableEntity
-from entities.message import MESSAGE_WAIT, ComeMessage
 from utils import rect_in_world, rects_are_overlapping, normalize
 
 
