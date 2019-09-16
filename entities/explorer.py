@@ -110,7 +110,7 @@ class Explorer(DrawableEntity):
                 
         else:
             #--------------------------------
-            #CAPA 3
+            #CAPA 4
             #--------------------------------
             # Pick up.
             rock = self._rock_available()
@@ -124,6 +124,10 @@ class Explorer(DrawableEntity):
             if rock:
                 self.dx, self.dy = normalize(rock.x - self.x, rock.y - self.y)
 
+
+            #--------------------------------
+            #CAPA 5
+            #--------------------------------
             # Pick up crumb and continue moving
             morona = self._morona_available()
             if morona:
@@ -131,7 +135,10 @@ class Explorer(DrawableEntity):
                 self.dy = morona.dy * -1
                 self.world.remove_entity(morona)
 
-        # Move randomly. Change direction if 
+        #--------------------------------
+        #CAPA 6
+        #--------------------------------
+        # Move randomly. Change direction if unable to move
         if self.ticks % 200 == 0 and self._morona_range() == 0:
             self.dx, self.dy = self._get_new_direction()
 
