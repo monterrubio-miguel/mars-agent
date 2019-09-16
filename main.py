@@ -38,7 +38,7 @@ def main():
     parser.add_argument('--obstacles', default=15, dest='obstacles', type=int)
     parser.add_argument('--rocks', default=100, dest='rocks', type=int)
     parser.add_argument('--explorers', default=10, dest='explorers', type=int)
-    parser.add_argument('--iscoop', default=True, dest='iscoop', type=bool)
+    parser.add_argument('--iscoop', default=1, dest='iscoop', type=int)
 
     args = parser.parse_args()
 

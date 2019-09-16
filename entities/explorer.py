@@ -25,7 +25,6 @@ class Explorer(DrawableEntity):
         self.has_rock = False
         self.tempdx, self.tempdy = self._get_new_direction()
         self.isCoop = isCoop
-        print(self.isCoop)
 
     def draw(self, canvas):
         # Helper is the sensor. Detects objects when within range specified above
@@ -68,7 +67,7 @@ class Explorer(DrawableEntity):
                 self.dx = self.tempdy
                 self.dy = -self.tempdx
             
-            if self.ticks % 10 == 0 and self.has_rock and self.isCoop == True:
+            if self.ticks % 10 == 0 and self.has_rock and self.isCoop == 1:
                 morona = Morona(self.x, 
                                 self.y, 
                                 self.dx, 
@@ -88,7 +87,7 @@ class Explorer(DrawableEntity):
                 self.has_rock = False
                 self.world.rock_collected()
 
-                if self.isCoop == True:
+                if self.isCoop == 1:
                     #leaves crumb at base
                     morona = Morona(self.x, 
                                     self.y, 
@@ -105,7 +104,7 @@ class Explorer(DrawableEntity):
                                          self.world.mars_base.y - self.y)
 
             # Drop crumbs every 15 ticks (does not drop crumb in tick "0")
-            if self.ticks % 10 == 0 and self.ticks > 0 and self.isCoop == True:
+            if self.ticks % 10 == 0 and self.ticks > 0 and self.isCoop == 1:
                 morona = Morona(self.x, 
                                 self.y, 
                                 self.dx, 

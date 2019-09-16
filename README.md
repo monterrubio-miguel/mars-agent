@@ -6,7 +6,7 @@ All credit to https://github.com/mihneadb/mars-explorer. This repo is a modifica
 ```bash
 python main.py --help
 usage: main.py [-h] [--obstacles OBSTACLES] [--rocks ROCKS]
-               [--explorers EXPLORERS] [--carriers CARRIERS] [--iscoop True/False]
+               [--explorers EXPLORERS] [--carriers CARRIERS] [--iscoop 0/1]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -14,7 +14,7 @@ optional arguments:
   --rocks ROCKS
   --explorers EXPLORERS
   --carriers CARRIERS
-  --iscoop IS COOPERATIVE OR INDIVIDUAL
+  --iscoop IS COOPERATIVE OR INDIVIDUAL (Note: Inputting any other option other than '1' will default to 0)
 
 ```
 
