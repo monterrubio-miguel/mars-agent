@@ -14,7 +14,7 @@ optional arguments:
   --rocks ROCKS
   --explorers EXPLORERS
   --carriers CARRIERS
-  --iscoop IS COOPERATIVE OR INDIVIDUAL (Note: Inputting any other option other than '1' will default to 0)
+  --iscoop IS COOPERATIVE OR INDIVIDUAL (Note: Inputting any other option other than '1' will default to '0')
 
 ```
 
@@ -37,10 +37,11 @@ Explorers wander about. When they find a rock, they pick it up and leave a trail
 
     To run in this mode, you need to pass `--iscoop false`.
 
-![demo-without-carriers](https://raw.githubusercontent.com/mihneadb/mars-explorer/master/demo-gifs/mars-explorer-no-carriers.gif)
-
+<!-- ![demo-without-carriers](https://raw.githubusercontent.com/mihneadb/mars-explorer/master/demo-gifs/mars-explorer-no-carriers.gif)
+ -->
 ### Cooperative (default)
 
 Explorers wander about. When they find a rock, they pick it up and take it to the base.
 
-![demo-with-carriers](https://raw.githubusercontent.com/mihneadb/mars-explorer/master/demo-gifs/mars-explorer-carriers.gif)
+<!-- ![demo-with-carriers](https://raw.githubusercontent.com/mihneadb/mars-explorer/master/demo-gifs/mars-explorer-carriers.gif)
+ -->
