@@ -6,7 +6,7 @@ All credit to https://github.com/mihneadb/mars-explorer. This repo is a modifica
 ```bash
 python main.py --help
 usage: main.py [-h] [--obstacles OBSTACLES] [--rocks ROCKS]
-               [--explorers EXPLORERS] [--carriers CARRIERS]
+               [--explorers EXPLORERS] [--carriers CARRIERS] [--iscoop True/False]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -14,6 +14,7 @@ optional arguments:
   --rocks ROCKS
   --explorers EXPLORERS
   --carriers CARRIERS
+  --iscoop IS COOPERATIVE OR INDIVIDUAL
 
 ```
 
@@ -28,27 +29,18 @@ All params have defaults.
 * can sense nearby rocks
 * can sense if they are "on" a rock or the base
 
-### Carriers
-
-* can carry any number of rocks
-* can go to an explorer agent
-
-
 ## Modes
 
-### No carriers
+### Individual
 
-Explorers wander about, for every rock found they take it to the base.
+Explorers wander about. When they find a rock, they pick it up and leave a trail of crumbs on their way back to the base. If another explorer finds this trail, it will follow it to the destination where the previous explorer had found a rock.
 
-    To run in this mode, you need to pass `--carriers 0`.
+    To run in this mode, you need to pass `--iscoop false`.
 
 ![demo-without-carriers](https://raw.githubusercontent.com/mihneadb/mars-explorer/master/demo-gifs/mars-explorer-no-carriers.gif)
 
-### With carriers
+### Cooperative (default)
 
-Explorers wander about. When they find a rock, they stop, send a message to all carriers
-and one or more carriers will come to pick up the rock. Then the explorer carries on with
-the search. When all the rocks are collected, the carriers go to the base to turn in their
-rocks.
+Explorers wander about. When they find a rock, they pick it up and take it to the base.
 
 ![demo-with-carriers](https://raw.githubusercontent.com/mihneadb/mars-explorer/master/demo-gifs/mars-explorer-carriers.gif)

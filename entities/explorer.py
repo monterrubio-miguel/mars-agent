@@ -16,7 +16,7 @@ class Explorer(DrawableEntity):
     HAS_ROCK_COLOR = 'yellow'
     SENSOR_COLOR = 'yellow'
 
-    def __init__(self, x, y, world):
+    def __init__(self, x, y, world, isCoop):
         self.x = x
         self.y = y
         self.world = world
@@ -24,10 +24,12 @@ class Explorer(DrawableEntity):
         self.ticks = 0
         self.has_rock = False
         self.tempdx, self.tempdy = self._get_new_direction()
+        self.isCoop = isCoop
+        print(self.isCoop)
 
     def draw(self, canvas):
         # Helper is the sensor. Detects objects when within range specified above
-        helper = Explorer(self.x, self.y, self.world)
+        helper = Explorer(self.x, self.y, self.world, self.isCoop)
         helper.SIZE = 2 * self.SENSOR_RANGE + self.SIZE
 
         #Draws sensor range as a circle
@@ -66,7 +68,7 @@ class Explorer(DrawableEntity):
                 self.dx = self.tempdy
                 self.dy = -self.tempdx
             
-            if self.ticks % 10 == 0 and self.has_rock:
+            if self.ticks % 10 == 0 and self.has_rock and self.isCoop == True:
                 morona = Morona(self.x, 
                                 self.y, 
                                 self.dx, 
@@ -85,12 +87,14 @@ class Explorer(DrawableEntity):
             if self._drop_available():
                 self.has_rock = False
                 self.world.rock_collected()
-                #leaves crumb at base
-                morona = Morona(self.x, 
-                                self.y, 
-                                self.dx, 
-                                self.dy)
-                self.world.add_entity(morona)
+
+                if self.isCoop == True:
+                    #leaves crumb at base
+                    morona = Morona(self.x, 
+                                    self.y, 
+                                    self.dx, 
+                                    self.dy)
+                    self.world.add_entity(morona)
                 return
 
             #--------------------------------
@@ -101,7 +105,7 @@ class Explorer(DrawableEntity):
                                          self.world.mars_base.y - self.y)
 
             # Drop crumbs every 15 ticks (does not drop crumb in tick "0")
-            if self.ticks % 10 == 0 and self.ticks > 0:
+            if self.ticks % 10 == 0 and self.ticks > 0 and self.isCoop == True:
                 morona = Morona(self.x, 
                                 self.y, 
                                 self.dx, 
@@ -162,7 +166,8 @@ class Explorer(DrawableEntity):
     def _can_move(self):
         new_self = Explorer(self.x + self.dx,
                             self.y + self.dy,
-                            self.world)
+                            self.world,
+                            self.isCoop)
         bounds = new_self.get_bounds()
 
         if not rect_in_world(bounds, new_self.world):
