@@ -50,8 +50,12 @@ class Explorer(DrawableEntity):
         self._tick()
         self.ticks += 1
 
+    #function runs each tick
     def _tick(self):
-        #avoids obstacle if in sensor range
+        #--------------------------------
+        #CAPA 1
+        #--------------------------------
+        #avoids obstacle if they are in sensor range
         obstacle = self._obstacle_range()
         if obstacle:
 
@@ -72,7 +76,11 @@ class Explorer(DrawableEntity):
             self._move()
             return
 
+        
         if self.has_rock:
+            #--------------------------------
+            #CAPA 2
+            #--------------------------------
             # If at base, drop rock
             if self._drop_available():
                 self.has_rock = False
@@ -85,6 +93,9 @@ class Explorer(DrawableEntity):
                 self.world.add_entity(morona)
                 return
 
+            #--------------------------------
+            #CAPA 3
+            #--------------------------------
             # If with rock and not at base, move towards base
             self.dx, self.dy = normalize(self.world.mars_base.x - self.x,
                                          self.world.mars_base.y - self.y)
@@ -98,6 +109,9 @@ class Explorer(DrawableEntity):
                 self.world.add_entity(morona)
                 
         else:
+            #--------------------------------
+            #CAPA 3
+            #--------------------------------
             # Pick up.
             rock = self._rock_available()
             if rock:
